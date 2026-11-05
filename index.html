@@ -13,6 +13,10 @@
             integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
             crossorigin="anonymous"
         />
+
+        <!-- Jquery CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous"></script>
+
     </head>
 
     <body>
@@ -22,7 +26,7 @@
         <form action="" method="post">
             <input type="text" name="tarea" id="tarea">
             <br>
-            <button type="button">Agregar tarea</button>
+            <button type="button" id="btnEnviar">Agregar tarea</button>
         </form>
         
         <ul>
@@ -45,5 +49,25 @@
             integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
             crossorigin="anonymous"
         ></script>
+
+        <script>
+            $("#btnEnviar").click(function (e) {
+
+            var objTarea = $("#tarea").val();
+
+            $.ajax({
+                type: "POST",
+                url: "api.php",
+                data: {tarea: objTarea},
+                dataType: "text",
+                success: function (resultado) {
+                    alert(resultado);
+                    console.log(resultado);
+                    $("#txtMensaje").html(resultado);
+                }
+            });
+            
+        });
+        </script>
     </body>
 </html>
