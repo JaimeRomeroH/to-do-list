@@ -11,7 +11,9 @@
        print_r($conexion->connect_error); 
     }
 
-    if($_POST){
+    $accion = $_POST["accion"];
+
+    if($accion == "agregar"){
         echo "Se agrego la terea: ".$_POST["tarea"];
 
         $tarea = $_POST["tarea"];
@@ -21,15 +23,18 @@
         $conexion->query($sql);
    }
    
-   $sql = "SELECT * FROM tareas";
-   $resultado = $conexion->query($sql);
+   if($accion == "leer"){
+       $sql = "SELECT * FROM tareas";
+       $resultado = $conexion->query($sql);
 
-   if($resultado->num_rows > 0){
-        $tareas = array();
-        while($fila = $resultado->fetch_assoc()){
-              $tareas[] = $fila;   
-        }
+      if($resultado->num_rows > 0){
+         $tareas = array();
+         while($fila = $resultado->fetch_assoc()){
+               $tareas[] = $fila;   
+         }
 
-        print_r($tareas);
+         echo json_encode(array('success' => true, 'datos' => $tareas));
+      } 
    }
+   
 ?>

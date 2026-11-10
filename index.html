@@ -51,23 +51,43 @@
         ></script>
 
         <script>
-            $("#btnEnviar").click(function (e) {
+            
+            $(document).ready(function(){
 
-            var objTarea = $("#tarea").val();
+                cargarTareas();
 
-            $.ajax({
-                type: "POST",
-                url: "api.php",
-                data: {tarea: objTarea},
-                dataType: "text",
-                success: function (resultado) {
-                    alert(resultado);
-                    console.log(resultado);
-                    $("#txtMensaje").html(resultado);
+                $("#btnEnviar").click(function (e) {
+
+                    var objTarea = $("#tarea").val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "api.php",
+                        data: {accion: "agregar", tarea: objTarea},
+                        dataType: "text",
+                        success: function (resultado) {
+                            alert(resultado);
+                            console.log(resultado);
+                            $("#txtMensaje").html(resultado);
+                        }
+                    });
+                
+                });
+
+                function cargarTareas(){
+                    $.ajax({
+                        type: "POST",
+                        url: "api.php",
+                        data: {accion: "leer"},
+                        dataType: "text",
+                        success: function (resultado) {
+                            alert(resultado);
+                            console.log(resultado);                            
+                        }
+                    });
                 }
             });
             
-        });
         </script>
     </body>
 </html>
