@@ -29,14 +29,14 @@
             <button type="button" id="btnEnviar">Agregar tarea</button>
         </form>
         
-        <ul>
+        <ul id="tareas">
             <li>
                 Hacer una aplicación con JQuery 
                 <input type="button" value="x"> <input type="button" value="&#10003">
             </li>
             <li>
-                Hacer una aplicación con PHP <input type="button" value="x"> 
-                <input type="button" value="&#10003">
+                Hacer una aplicación con PHP 
+                <input type="button" value="x"> <input type="button" value="&#10003">
             </li>
             <li>
                 Hacer una aplicación con JavaScript 
@@ -69,6 +69,7 @@
                             alert(resultado);
                             console.log(resultado);
                             $("#txtMensaje").html(resultado);
+                            cargarTareas();
                         }
                     });
                 
@@ -79,10 +80,16 @@
                         type: "POST",
                         url: "api.php",
                         data: {accion: "leer"},
-                        dataType: "text",
+                        dataType: "json",
                         success: function (resultado) {
-                            alert(resultado);
-                            console.log(resultado);                            
+                            var listaTareas = $("#tareas");
+                            listaTareas.empty();
+                            $.each(resultado.datos, function(index, tarea){
+                                console.log(tarea);
+                                var lista = $("<li></li>").text(tarea.tarea);
+
+                                listaTareas.append(lista);
+                            });                            
                         }
                     });
                 }

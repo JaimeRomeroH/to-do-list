@@ -1,4 +1,5 @@
 <?php
+    header("Content-Type: application/json");
     $servidor = "localhost";
     $usuario = "root";
     $password = "";
@@ -14,13 +15,14 @@
     $accion = $_POST["accion"];
 
     if($accion == "agregar"){
-        echo "Se agrego la terea: ".$_POST["tarea"];
 
         $tarea = $_POST["tarea"];
 
         $sql = "INSERT INTO tareas (id, tarea, completado) VALUES (NULL, '$tarea', 0)";
 
         $conexion->query($sql);
+
+        echo json_encode(array('success' => true, 'datos' => "Se agrego la terea."));
    }
    
    if($accion == "leer"){
