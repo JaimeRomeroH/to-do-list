@@ -66,10 +66,12 @@
                         data: {accion: "agregar", tarea: objTarea},
                         dataType: "text",
                         success: function (resultado) {
-                            alert(resultado);
+                            
                             console.log(resultado);
                             $("#txtMensaje").html(resultado);
+
                             cargarTareas();
+                            $("#tarea").val("");
                         }
                     });
                 
@@ -87,6 +89,26 @@
                             $.each(resultado.datos, function(index, tarea){
                                 console.log(tarea);
                                 var lista = $("<li></li>").text(tarea.tarea);
+
+                                var btnBorrar = $("<button></button>").text("X");
+
+                                btnBorrar.on("click", function(){
+                                    alert(tarea.id);
+                                });
+
+                                var btnCompletar = $("<button></button>").html("&#10003");
+
+                                btnCompletar.on("click", function(){
+                                    alert(tarea.id);
+                                });
+
+                                lista.append(" - ");
+
+                                lista.append(btnCompletar);
+
+                                lista.append(" - ");
+
+                                lista.append(btnBorrar);
 
                                 listaTareas.append(lista);
                             });                            
