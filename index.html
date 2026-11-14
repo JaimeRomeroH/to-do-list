@@ -93,7 +93,7 @@
                                 var btnBorrar = $("<button></button>").text("X");
 
                                 btnBorrar.on("click", function(){
-                                    alert(tarea.id);
+                                    borrarTarea(tarea.id);
                                 });
 
                                 var btnCompletar = $("<button></button>").html("&#10003");
@@ -115,6 +115,21 @@
                         }
                     });
                 }
+
+                function borrarTarea(idLista){
+                    $.ajax({
+                        type: "POST",
+                        url: "api.php",
+                        data: {accion: "borrar", id: idLista},
+                        dataType: "text",
+                        success: function (resultado) {                            
+                            console.log(resultado);
+                            cargarTareas();
+                        }
+                    });
+                }
+
+                function completarTarea(id){}
             });
             
         </script>

@@ -24,6 +24,17 @@
 
         echo json_encode(array('success' => true, 'datos' => "Se agrego la terea."));
    }
+
+   if($accion == "borrar"){
+
+        $id = $_POST["id"];
+
+        $sql = "DELETE FROM tareas WHERE id = $id";
+
+        $conexion->query($sql);
+
+        echo json_encode(array('success' => true, 'datos' => "Se elimino la terea."));
+   }
    
    if($accion == "leer"){
        $sql = "SELECT * FROM tareas";
