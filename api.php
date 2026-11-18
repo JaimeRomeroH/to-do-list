@@ -35,6 +35,17 @@
 
         echo json_encode(array('success' => true, 'datos' => "Se elimino la terea."));
    }
+
+   if($accion == "completar"){
+
+        $id = $_POST["id"];
+
+        $sql = "UPDATE tareas SET completado = 1 WHERE id = $id";
+
+        $conexion->query($sql);
+
+        echo json_encode(array('success' => true, 'datos' => "Se completo la terea."));
+   }
    
    if($accion == "leer"){
        $sql = "SELECT * FROM tareas";

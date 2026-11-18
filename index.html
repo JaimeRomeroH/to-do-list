@@ -16,7 +16,12 @@
 
         <!-- Jquery CDN -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous"></script>
-
+        
+        <style>
+            li.completado{
+                text-decoration: line-through;
+            }
+        </style>
     </head>
 
     <body>
@@ -30,18 +35,7 @@
         </form>
         
         <ul id="tareas">
-            <li>
-                Hacer una aplicación con JQuery 
-                <input type="button" value="x"> <input type="button" value="&#10003">
-            </li>
-            <li>
-                Hacer una aplicación con PHP 
-                <input type="button" value="x"> <input type="button" value="&#10003">
-            </li>
-            <li>
-                Hacer una aplicación con JavaScript 
-                <input type="button" value="x"> <input type="button" value="&#10003">
-            </li>
+            
         </ul>
 
         <script
@@ -90,6 +84,10 @@
                                 console.log(tarea);
                                 var lista = $("<li></li>").text(tarea.tarea);
 
+                                if(tarea.completado == 1){
+                                    lista.addClass("completado");
+                                }
+
                                 var btnBorrar = $("<button></button>").text("X");
 
                                 btnBorrar.on("click", function(){
@@ -99,7 +97,7 @@
                                 var btnCompletar = $("<button></button>").html("&#10003");
 
                                 btnCompletar.on("click", function(){
-                                    alert(tarea.id);
+                                    completarTarea(tarea.id);
                                 });
 
                                 lista.append(" - ");
@@ -129,7 +127,18 @@
                     });
                 }
 
-                function completarTarea(id){}
+                function completarTarea(idLista){
+                    $.ajax({
+                        type: "POST",
+                        url: "api.php",
+                        data: {accion: "completar", id: idLista},
+                        dataType: "text",
+                        success: function (resultado) {                            
+                            console.log(resultado);
+                            cargarTareas();
+                        }
+                    });
+                }
             });
             
         </script>
